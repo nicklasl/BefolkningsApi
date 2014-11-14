@@ -2,12 +2,15 @@ package nu.nldv.befolkning.model
 
 case class Income(id: Int,
                   areaCode: String,
-                  areaText: String,
-                  aldi4kCode: Int,
-                  aldi4kText: String,
-                  konkCode: Int,
-                  konkText: String,
-                  inkom2Antal: Int,
-                  inkomAntal: Int,
-                  inkomst: BigInt,
-                  year: Int)
+                  areaName: String,
+                  ageGroupCode: Int,
+                  ageGroupName: String,
+                  sexCode: Int,
+                  sexName: String,
+                  zeroEarners: Int,
+                  earners: Int,
+                  totalIncomeForArea: BigInt,
+                  year: Int) {
+  val averageIncome = totalIncomeForArea / earners
+  val averageIncomeWithoutZeroEarners = totalIncomeForArea / zeroEarners
+}

@@ -11,7 +11,7 @@ object Application extends App {
 
   Api.getIncomeData(apikey) map {
     x =>
-      x.sortBy(f=> f.inkomst).takeRight(10).foreach(i => println(i.areaText + " "+i.inkomst))
+      x.sortBy(f=> f.averageIncomeWithoutZeroEarners).takeRight(2).foreach(println(_))
       actorSystem.shutdown()
   }
 

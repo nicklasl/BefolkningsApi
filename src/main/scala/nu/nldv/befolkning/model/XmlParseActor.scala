@@ -14,17 +14,17 @@ class XmlParseActor extends Actor {
       val list = incomeSeq.map {
         node =>
           Income(
-            (node \ "ID").text.toInt,
-            (node \ "AREA_CODE").text,
-            (node \ "AREA_TEXT").text,
-            (node \ "ALDI4K_CODE").text.toInt,
-            (node \ "ALDI4K_TEXT").text,
-            (node \ "KONK_CODE").text.toInt,
-            (node \ "KONK_TEXT").text,
-            (node \ "INKOM2_ANTAL").text.toInt,
-            (node \ "INKOM_ANTAL").text.toInt,
-            BigInt((node \ "INKOMST").text),
-            (node \ "YEAR").text.toInt
+            id = (node \ "ID").text.toInt,
+            areaCode = (node \ "AREA_CODE").text,
+            areaName = (node \ "AREA_TEXT").text,
+            ageGroupCode = (node \ "ALDI4K_CODE").text.toInt,
+            ageGroupName = (node \ "ALDI4K_TEXT").text,
+            sexCode = (node \ "KONK_CODE").text.toInt,
+            sexName = (node \ "KONK_TEXT").text,
+            zeroEarners = (node \ "INKOM2_ANTAL").text.toInt,
+            earners = (node \ "INKOM_ANTAL").text.toInt,
+            totalIncomeForArea = BigInt((node \ "INKOMST").text),
+            year = (node \ "YEAR").text.toInt
           )
       }.toList
       mainSender ! Result[List[Income]](Some(list))
