@@ -1,5 +1,7 @@
-package nu.nldv.befolkning
+import nu.nldv.befolkning.Api
+import nu.nldv.befolkning.model.Income
 
+import scala.concurrent.Future
 import scala.io.Source
 
 object Application extends App {
@@ -9,9 +11,11 @@ object Application extends App {
   implicit val actorSystem = akka.actor.ActorSystem("ActorSystem")
   implicit val ec = scala.concurrent.ExecutionContext.Implicits.global
 
-  Api.getIncomeData(apikey) map {
+  private val eventualIncomes: Future[List[Income]] = Api.getIncomeData(apikey)
+
+  eventualIncomes map {
     x =>
-      x.sortBy(f=> f.averageIncomeWithoutZeroEarners).takeRight(2).foreach(println(_))
+      x.sortBy(f => f.averageIncomeWithoutZeroEarners).takeRight(10).foreach(println(_))
       actorSystem.shutdown()
   }
 

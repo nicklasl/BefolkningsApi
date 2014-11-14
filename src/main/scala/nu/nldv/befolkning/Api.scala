@@ -24,12 +24,10 @@ object Api {
 
 
   def getIncomeData(apiKey: String)(implicit actorSystem: ActorSystem, executionContext: ExecutionContext): Future[List[Income]] = {
-    val uri = s"$incomeUri?apikey=$apiKey"
     val downloadActor = actorSystem.actorOf(DownloadActor.props(client), name = s"DownloadActor-income-${System.currentTimeMillis()}")
     val parseActor = actorSystem.actorOf(Props[XmlParseActor], name = s"XmlParseActor-income-${System.currentTimeMillis()}")
+    val url = new URL(s"$incomeUri?apikey=$apiKey")
 
-    val url = new URL(uri)
-    println(url)
     downloadActor ? url flatMap {
       case result: Result[Elem] => {
         client.close()
