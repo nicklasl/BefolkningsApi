@@ -32,7 +32,7 @@ object Api {
     println(url)
     downloadActor ? url flatMap {
       case result: Result[Elem] => {
-        println(s"got successful result back:${result.successful}")
+        client.close()
         if (result.successful) parseActor ? result.option.get flatMap {
           case result: Result[List[Income]] => Future.successful(result.option.get)
           case _ => Future.failed(new Exception("Could not parse data."))
