@@ -11,12 +11,18 @@ object Application extends App {
   implicit val actorSystem = akka.actor.ActorSystem("ActorSystem")
   implicit val ec = scala.concurrent.ExecutionContext.Implicits.global
 
-  private val eventualIncomes: Future[List[Income]] = Api.getIncomeData(apikey)
-
-  eventualIncomes map {
+  Api.getPopulation(apikey) map {
     x =>
-      x.sortBy(f => f.averageIncomeWithoutZeroEarners).takeRight(10).foreach(println(_))
+      x.sortBy(_.populationNumber).reverse.foreach(println(_))
       actorSystem.shutdown()
   }
+
+//  private val eventualIncomes: Future[List[Income]] = Api.getIncomeData(apikey)
+//
+//  eventualIncomes map {
+//    x =>
+//      x.sortBy(f => f.averageIncomeWithoutZeroEarners).takeRight(10).foreach(println(_))
+//      actorSystem.shutdown()
+//  }
 
 }

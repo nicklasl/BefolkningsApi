@@ -1,33 +1,32 @@
-package nu.nldv.befolkning.model
+package nu.nldv.befolkning.actors
 
 import akka.actor.Actor
-import akka.actor.Actor.Receive
+import nu.nldv.befolkning.model.{Population, Result}
 
 import scala.xml.{NodeSeq, Elem}
 
-class XmlParseActor extends Actor {
+class PopulationParseActor extends Actor {
+
   override def receive: Receive = {
     case xml: Elem => {
       val mainSender = sender()
 
-      val incomeSeq: NodeSeq = xml \\ "medelinkomst"
+      val incomeSeq: NodeSeq = xml \\ "befolkning"
       val list = incomeSeq.map {
         node =>
-          Income(
+          Population(
             id = (node \ "ID").text.toInt,
             areaCode = (node \ "AREA_CODE").text,
             areaName = (node \ "AREA_TEXT").text,
-            ageGroupCode = (node \ "ALDI4K_CODE").text.toInt,
-            ageGroupName = (node \ "ALDI4K_TEXT").text,
+            ageCode = (node \ "ALD11K_CODE").text.toInt,
+            ageName = (node \ "ALD11K_TEXT").text,
             sexCode = (node \ "KONK_CODE").text.toInt,
             sexName = (node \ "KONK_TEXT").text,
-            zeroEarners = (node \ "INKOM2_ANTAL").text.toInt,
-            earners = (node \ "INKOM_ANTAL").text.toInt,
-            totalIncomeForArea = BigInt((node \ "INKOMST").text),
+            populationNumber = (node \ "BEF_ANTAL").text.toInt,
             year = (node \ "YEAR").text.toInt
           )
       }.toList
-      mainSender ! Result[List[Income]](Some(list))
+      mainSender ! Result[List[Population]](Some(list))
     }
   }
 }
