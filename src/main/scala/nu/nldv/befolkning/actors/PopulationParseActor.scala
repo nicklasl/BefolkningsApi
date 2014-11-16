@@ -3,7 +3,7 @@ package nu.nldv.befolkning.actors
 import akka.actor.Actor
 import nu.nldv.befolkning.model.{Population, Result}
 
-import scala.xml.{NodeSeq, Elem}
+import scala.xml.{Elem, NodeSeq}
 
 class PopulationParseActor extends Actor {
 
