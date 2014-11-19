@@ -17,6 +17,7 @@ class DownloadActor(client: NingWSClient) extends Actor {
       val mainSender = sender()
       val eventualResponse: Future[WSResponse] = client.url(url.toString).get()
       eventualResponse.map { r =>
+        r.
         mainSender ! Result[Elem](Some(r.xml))
       }
     }
