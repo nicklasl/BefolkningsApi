@@ -24,7 +24,7 @@ object Api {
   val client = new NingWSClient(new AsyncHttpClientConfig.Builder().build())
 
 
-  def getIncomeData(apiKey: String)(implicit actorSystem: ActorSystem, executionContext: ExecutionContext): Future[List[Income]] = {
+  def getIncomeData(implicit apiKey: String, actorSystem: ActorSystem, executionContext: ExecutionContext): Future[List[Income]] = {
     val downloadActor = actorSystem.actorOf(DownloadActor.props(client), name = s"DownloadActor-income-${System.currentTimeMillis()}")
     val parseActor = actorSystem.actorOf(Props[IncomeParseActor], name = s"ParseActor-income-${System.currentTimeMillis()}")
     val url = new URL(s"$incomeUri?apikey=$apiKey")
@@ -43,7 +43,7 @@ object Api {
   }
 
 
-  def getPopulation(apiKey: String)(implicit actorSystem: ActorSystem, executionContext: ExecutionContext): Future[List[Population]] = {
+  def getPopulation(implicit apiKey: String, actorSystem: ActorSystem, executionContext: ExecutionContext): Future[List[Population]] = {
     val downloadActor = actorSystem.actorOf(DownloadActor.props(client), name = s"DownloadActor-population-${System.currentTimeMillis()}")
     val parseActor = actorSystem.actorOf(Props[PopulationParseActor], name = s"ParseActor-population-${System.currentTimeMillis()}")
     val url = new URL(s"$populationUri?apikey=$apiKey")
