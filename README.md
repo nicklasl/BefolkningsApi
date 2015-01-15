@@ -4,7 +4,7 @@ Scala STHLM BefolkningsAPI
 This is a Scala API for the Stockholm Open Data - Befolkningsdatabasen web API.
 The Web API requires a generated API key, to generate that key:
 - Visit: http://data.stockholm.se/ApiKey
-- Generate a new key for "Tjänst": Befolkningsdatabasen.
+- Generate a new key for "Tjänst: Befolkningsdatabasen".
 
 Use the API like so:
 ```
