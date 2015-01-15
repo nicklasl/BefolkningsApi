@@ -1,4 +1,5 @@
-
+Scala STHLM BefolkningsAPI
+-----------
 
 This is a Scala API for the Stockholm Open Data - Befolkningsdatabasen web API.
 The Web API requires a generated API key, to generate that key:
@@ -17,7 +18,5 @@ val eventualIncomes: Future[List[Income]] = Api.getIncomeData
 eventualIncomes map {
   incomes =>
     val richPeople: List[Income] = incomes.sortBy(income => income.averageIncomeWithoutZeroEarners).reverse
-    actorSystem.shutdown()
 }
-
 ```
